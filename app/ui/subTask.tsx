@@ -1,8 +1,6 @@
-import Button from "./button";
 import SubSubTask from "@/app/ui/subSubTask";
 import { getTaskLocalStorage } from "@/lib/helpers";
 import { TaskID } from "@/lib/types";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface StepComponentProps {
