@@ -1,6 +1,7 @@
 "use client";
 
 import TaskUI from "@/app/ui/task";
+import { getTaskLocalStorage } from "@/lib/helpers";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
@@ -11,7 +12,9 @@ function TaskPage() {
     const [id, setID] = useState("");
 
     useEffect(() => {
-        setID(searchParams.get("id") ?? "");
+        const newID = searchParams.get("id") ?? "";
+        setID(newID);
+        document.title = `Tasks For Me | ${getTaskLocalStorage(newID).name}`;
     }, [searchParams]);
 
     if (!id) {
