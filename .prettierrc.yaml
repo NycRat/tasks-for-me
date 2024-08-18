@@ -3,3 +3,5 @@ useTabs: false
 semi: true
 singleQuote: false
 trailingComma: es5
+plugins:
+    - "@trivago/prettier-plugin-sort-imports"
