@@ -6,6 +6,7 @@ import { FocusEvent, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 export default function TaskUI({ id }: { id: TaskID }) {
+    // TODO fix repeating code
     const [task, setTask] = useState<Task | null>(null);
 
     useEffect(() => {

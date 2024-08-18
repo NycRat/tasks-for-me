@@ -1,7 +1,8 @@
 import SubSubTask from "@/app/ui/subSubTask";
-import { getTaskLocalStorage } from "@/lib/helpers";
-import { TaskID } from "@/lib/types";
+import { getTaskLocalStorage, setTaskLocalStorage } from "@/lib/helpers";
+import { Task, TaskID } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { FocusEvent, useEffect, useState } from "react";
 
 interface StepComponentProps {
     id: TaskID;
@@ -9,13 +10,39 @@ interface StepComponentProps {
 }
 
 export default function SubTask({ id, handleRemove }: StepComponentProps) {
-    const task = getTaskLocalStorage(id);
+    const [task, setTask] = useState<Task | null>(null);
     const router = useRouter();
+
+    useEffect(() => {
+        setTask(getTaskLocalStorage(id));
+    }, [id]);
+
+    useEffect(() => {
+        if (task) {
+            setTaskLocalStorage(id, task);
+        }
+    }, [task, id]);
+
+    if (!task) {
+        return null;
+    }
 
     return (
         <div className="bg-surface rounded border border-highlight p-3 space-y-2">
             <h3 className="text-lg flex items-center justify-between">
-                {task.name}
+                <span
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e: FocusEvent) => {
+                        const newName = e.currentTarget.textContent ?? "";
+                        setTask({
+                            ...task,
+                            name: newName,
+                        });
+                    }}
+                >
+                    {task.name}
+                </span>
                 <span className="text-right space-x-2">
                     <button className="icon" onClick={handleRemove}>
                         delete
