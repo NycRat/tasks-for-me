@@ -1,4 +1,4 @@
-import "@/app/ui/globals.css";
+import "@/app/ui/globals.scss";
 import type { Metadata } from "next";
 import { Chakra_Petch } from "next/font/google";
 
@@ -16,7 +16,15 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={chakraPetch.className}>{children}</body>
+            <head>
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+                />
+            </head>
+            <body className={chakraPetch.className + " bg-background"}>
+                {children}
+            </body>
         </html>
     );
 }

@@ -1,7 +1,8 @@
+import Button from "@/app/ui/button";
 import SubTask from "@/app/ui/subTask";
 import { getTaskLocalStorage, setTaskLocalStorage } from "@/lib/helpers";
 import { Task, TaskID } from "@/lib/types";
-import { useEffect, useState } from "react";
+import { FocusEvent, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 
 export default function TaskUI({ id }: { id: TaskID }) {
@@ -22,12 +23,32 @@ export default function TaskUI({ id }: { id: TaskID }) {
     }
 
     return (
-        <div>
-            {task.name}
-            {task.subTasks.map((subTaskID) => (
-                <SubTask key={subTaskID} id={subTaskID} handleAdd={() => {}} />
+        <div className="space-y-3">
+            <h2
+                className="text-xl font-bold"
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={(e: FocusEvent) => {
+                    const newName = e.currentTarget.textContent ?? "";
+                    setTask({ ...task, name: newName });
+                }}
+            >
+                {task.name}
+            </h2>
+
+            {task.subTasks.map((subTaskID, i) => (
+                <SubTask
+                    key={subTaskID}
+                    id={subTaskID}
+                    handleRemove={() => {
+                        setTask({
+                            ...task,
+                            subTasks: [...task.subTasks.toSpliced(i, 1)],
+                        });
+                    }}
+                />
             ))}
-            <button
+            <Button
                 onClick={() => {
                     setTask({
                         ...task,
@@ -36,7 +57,7 @@ export default function TaskUI({ id }: { id: TaskID }) {
                 }}
             >
                 Add Step
-            </button>
+            </Button>
         </div>
     );
 }

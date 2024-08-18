@@ -21,7 +21,9 @@ function TaskPage() {
     return (
         <main>
             {/* TODO make default "/" if no history */}
-            <button onClick={router.back}>back</button>
+            <button onClick={router.back} className="icon text-xl">
+                arrow_back
+            </button>
             <TaskUI id={id} />
         </main>
     );

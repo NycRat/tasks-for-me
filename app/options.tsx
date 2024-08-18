@@ -1,8 +1,10 @@
+import Button from "@/app/ui/button";
+
 export default function Options() {
     // TODO implement both with new state thing
     return (
-        <div>
-            <button
+        <div className="space-x-2">
+            <Button
                 onClick={() => {
                     try {
                         alert("stored in localstorage");
@@ -12,15 +14,15 @@ export default function Options() {
                 }}
             >
                 Set As JSON
-            </button>
-            <button
+            </Button>
+            <Button
                 onClick={async () => {
                     await navigator.clipboard.writeText("");
                     alert("copied to clipboard");
                 }}
             >
                 Copy As JSON
-            </button>
+            </Button>
         </div>
     );
 }
