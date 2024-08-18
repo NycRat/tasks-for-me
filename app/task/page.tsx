@@ -2,9 +2,9 @@
 
 import TaskUI from "@/app/ui/task";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function TaskPage() {
+function TaskPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
@@ -24,5 +24,13 @@ export default function TaskPage() {
             <button onClick={router.back}>back</button>
             <TaskUI id={id} />
         </main>
+    );
+}
+
+export default function Page() {
+    return (
+        <Suspense>
+            <TaskPage />
+        </Suspense>
     );
 }
